@@ -1,6 +1,9 @@
+New-Item -Path C:\ -Name Temp -ItemType Directory -ErrorAction SilentlyContinue
+$env:TEMP = "C:\Temp"
+$env:TMP = "C:\Temp"
+
 Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run -Name bginfo -ErrorAction SilentlyContinue
 Remove-Item C:\BGinfo\ -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -Path C:\ -Name Temp -ItemType Directory -ErrorAction SilentlyContinue
 
 # Defender
 Add-MpPreference -ExclusionPath "C:\tools\"
@@ -23,7 +26,7 @@ choco install 7zip
 # Kali
 kali run "apt -y update"
 kali run "apt -y full-upgrade"
-kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat"
+kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux"
 kali run "pip install impacket"
 kali run "git clone https://github.com/rbsec/dnscan.git /opt/dnscan"
 kali run "git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; pip3 install -r requirements.txt"
@@ -52,30 +55,30 @@ git clone https://github.com/PowerShell/GPRegistryPolicy.git C:\tools\GPRegistry
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
 
-Invoke-WebRequest -Uri 'https://github.com/hashcat/hashcat/releases/download/v5.1.0/hashcat-5.1.0.7z' -OutFile "C:\Temp\hashcat.7z"
-7z x C:\Temp\hashcat.7z -oC:\tools\
+Invoke-WebRequest -Uri 'https://github.com/hashcat/hashcat/releases/download/v5.1.0/hashcat-5.1.0.7z' -OutFile "$env:TEMP\hashcat.7z"
+7z x $env:TEMP\hashcat.7z -oC:\tools\
 Rename-Item -Path "C:\tools\hashcat-5.1.0\" -NewName hashcat
 
-Invoke-WebRequest -Uri 'https://www.heidisql.com/downloads/releases/HeidiSQL_10.3_64_Portable.zip' -OutFile C:\Temp\HeidiSQL.zip
-Expand-Archive -Path "C:\Temp\HeidiSQL.zip" -DestinationPath "C:\tools\HeidiSQL"
+Invoke-WebRequest -Uri 'https://www.heidisql.com/downloads/releases/HeidiSQL_10.3_64_Portable.zip' -OutFile "$env:TEMP\HeidiSQL.zip"
+Expand-Archive -Path "$env:TEMP\HeidiSQL.zip" -DestinationPath "C:\tools\HeidiSQL"
 
 # BloodHound
-Invoke-WebRequest -Uri 'https://github.com/BloodHoundAD/BloodHound/releases/download/3.0.0/BloodHound-win32-x64.zip' -OutFile "C:\Temp\BloodHound.zip"
-Expand-Archive -Path "C:\Temp\BloodHound.zip" -DestinationPath C:\tools\
+Invoke-WebRequest -Uri 'https://github.com/BloodHoundAD/BloodHound/releases/download/3.0.0/BloodHound-win32-x64.zip' -OutFile "$env:TEMP\BloodHound.zip"
+Expand-Archive -Path "$env:TEMP\BloodHound.zip" -DestinationPath C:\tools\
 Rename-Item -Path C:\tools\BloodHound-win32-x64\ -NewName BloodHound
-Invoke-WebRequest -Uri 'https://neo4j.com/artifact.php?name=neo4j-community-4.0.0-windows.zip' -OutFile "C:\Temp\neo4j.zip"
-Expand-Archive -Path "C:\Temp\neo4j.zip" -DestinationPath C:\tools\
+Invoke-WebRequest -Uri 'https://neo4j.com/artifact.php?name=neo4j-community-4.0.0-windows.zip' -OutFile "$env:TEMP\neo4j.zip"
+Expand-Archive -Path "$env:TEMP\neo4j.zip" -DestinationPath C:\tools\
 Rename-Item -Path C:\tools\neo4j-community-4.0.0\ -NewName Neo4j
 
 ## Visual Studio
 $html = (New-Object Net.WebClient).DownloadString('https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16')
 $url = [regex]::Match($html, '(https).*(vs_Community.exe)').Captures.Groups[0].Value
-Invoke-WebRequest -Uri $url -OutFile "C:\Temp\vs_Community.exe"
-Start-Process -FilePath "C:\Temp\vs_Community.exe" -ArgumentList "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --passive" -Wait
-Invoke-WebRequest -Uri 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/0.9.6/vspackage' -OutFile "C:\Temp\InstallerProjects.vsix"
-Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/q C:\Temp\InstallerProjects.vsix" -Wait
-Invoke-WebRequest -Uri 'https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe' -OutFile "C:\Temp\BuildTools.exe"
-Start-Process -FilePath "C:\Temp\BuildTools.exe" -ArgumentList "/Passive" -Wait
+Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\vs_Community.exe"
+Start-Process -FilePath "$env:TEMP\vs_Community.exe" -ArgumentList "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --Passive" -Wait
+Invoke-WebRequest -Uri 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/0.9.6/vspackage' -OutFile "$env:TEMP\InstallerProjects.vsix"
+Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/q $env:TEMP\InstallerProjects.vsix" -Wait
+Invoke-WebRequest -Uri 'https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe' -OutFile "$env:TEMP\BuildTools.exe"
+Start-Process -FilePath "$env:TEMP\BuildTools.exe" -ArgumentList "/Passive" -Wait
 Enable-WindowsOptionalFeature -FeatureName NetFx3 -Online
 
 # UI
@@ -83,7 +86,12 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
 Set-WindowsExplorerOptions -EnableShowFileExtensions -EnableShowFullPathInTitleBar -EnableExpandToOpenFolder -EnableShowRibbon
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\tools.lnk" -targetPath C:\tools\
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\IEUser\Desktop\Start Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
-Install-ChocolateyPinnedTaskBarItem -targetFilePath C:\ProgramData\chocolatey\bin\kali.exe
+Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\kali.lnk" -targetPath "C:\ProgramData\chocolatey\bin\kali.exe" -runAsAdmin
+
+New-Item -Path C:\ -Name BGInfo -ItemType Directory -ErrorAction SilentlyContinue
+Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/wallpaper.jpg' -OutFile "C:\BGInfo\wallpaper.jpg"
+Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/bginfo.bgi' -OutFile "C:\BGInfo\bginfo.bgi"
+New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ -Name BGInfo -Value "C:\tools\sysinternals\Bginfo64.exe /accepteula /iC:\BGInfo\bginfo.bgi /timer:0"
 
 # Misc
 Remove-Item -Path "C:\Users\Public\Desktop\Boxstarter Shell.lnk"
