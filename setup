@@ -22,6 +22,11 @@ choco install openjdk11
 choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
 choco install googlechrome --ignore-checksums
 choco install 7zip
+choco install openvpn
+
+# OpenVPN
+New-Item -Path "$env:PUBLIC\Desktop" -Name OpenVPN -ItemType Directory -ErrorAction SilentlyContinue
+Invoke-WebRequest -Uri "https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/openvpn.bat" -OutFile "C:\ProgramData\chocolatey\bin\openvpn.bat"
 
 # Kali
 kali run "apt -y update"
@@ -89,9 +94,10 @@ Enable-WindowsOptionalFeature -FeatureName NetFx3 -Online
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
 Set-WindowsExplorerOptions -EnableShowFileExtensions -EnableShowFullPathInTitleBar -EnableExpandToOpenFolder -EnableShowRibbon
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\tools.lnk" -targetPath C:\tools\
-Install-ChocolateyShortcut -shortcutFilePath "C:\Users\IEUser\Desktop\Start Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
+Install-ChocolateyShortcut -shortcutFilePath "C:\Users\IEUser\Desktop\Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\kali.lnk" -targetPath "C:\ProgramData\chocolatey\bin\kali.exe" -runAsAdmin
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\Covenant.lnk" -targetPath "C:\ProgramData\chocolatey\bin\covenant.bat" -runAsAdmin
+Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\OpenVPN.lnk" -targetPath "C:\ProgramData\chocolatey\bin\openvpn.bat" -runAsAdmin
 
 New-Item -Path C:\ -Name BGInfo -ItemType Directory -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/wallpaper.jpg' -OutFile "C:\BGInfo\wallpaper.jpg"
@@ -102,4 +108,5 @@ New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ -Nam
 Remove-Item -Path "C:\Users\Public\Desktop\Boxstarter Shell.lnk"
 Remove-Item -Path "C:\Users\IEUser\Desktop\eula.lnk"
 Remove-Item -Path "C:\Users\Public\Desktop\Visual Studio Code.lnk"
+Remove-Item -Path "C:\Users\Public\Desktop\OpenVPN GUI.lnk"
 Remove-Item -Path C:\Temp\ -Recurse -Force
