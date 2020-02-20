@@ -5,8 +5,11 @@ $env:TMP = "C:\Temp"
 Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run -Name bginfo -ErrorAction SilentlyContinue
 Remove-Item C:\BGinfo\ -Recurse -Force -ErrorAction SilentlyContinue
 
+New-Item -Path C:\ -Name payloads -ItemType Directory -ErrorAction SilentlyContinue
+
 # Defender
 Add-MpPreference -ExclusionPath "C:\tools\"
+Add-MpPreference -ExclusionPath "C:\payloads\"
 Add-MpPreference -ExclusionPath "C:\ProgramData\chocolatey\lib\wsl-kalilinux\"
 Set-MpPreference -MAPSReporting Disabled
 Set-MpPreference -SubmitSamplesConsent NeverSend
