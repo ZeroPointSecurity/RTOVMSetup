@@ -34,6 +34,7 @@ kali run "apt -y full-upgrade"
 kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux"
 kali run "pip install impacket"
 kali run "git clone https://github.com/rbsec/dnscan.git /opt/dnscan"
+kali run "git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck"
 kali run "git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; pip3 install -r requirements.txt"
 
 # GitHub
