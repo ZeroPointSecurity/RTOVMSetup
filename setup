@@ -65,6 +65,9 @@ git clone https://github.com/PowerShell/GPRegistryPolicy.git C:\tools\GPRegistry
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
 
+Invoke-WebRequest -Uri 'https://github.com/0xd4d/dnSpy/releases/download/v6.1.3/dnSpy-net472.zip' -OutFile "$env:TEMP\dnSpy.zip"
+Expand-Archive -Path "$env:TEMP\dnSpy.zip" -DestinationPath C:\tools\
+
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/build-covenant.bat' -OutFile "$env:TEMP\build-covenant.bat"
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/run-covenant.bat' -OutFile "C:\ProgramData\chocolatey\bin\covenant.bat"
 . "$env:TEMP\build-covenant.bat"
