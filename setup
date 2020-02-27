@@ -34,7 +34,7 @@ Invoke-WebRequest -Uri "https://github.com/ZeroPointSecurity/RTOVMSetup/raw/mast
 # Kali
 kali run "apt -y update"
 kali run "apt -y full-upgrade"
-kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux cupp cewl"
+kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux cupp cewl vim hashcat"
 kali run "pip install impacket"
 kali run "git clone https://github.com/rbsec/dnscan.git /opt/dnscan"
 kali run "git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; pip install -r requirements.txt"
@@ -76,10 +76,6 @@ Expand-Archive -Path "$env:TEMP\dnSpy.zip" -DestinationPath C:\tools\dnSpy
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/build-covenant.bat' -OutFile "$env:TEMP\build-covenant.bat"
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/run-covenant.bat' -OutFile "C:\ProgramData\chocolatey\bin\covenant.bat"
 . "$env:TEMP\build-covenant.bat"
-
-Invoke-WebRequest -Uri 'https://github.com/hashcat/hashcat/releases/download/v5.1.0/hashcat-5.1.0.7z' -OutFile "$env:TEMP\hashcat.7z"
-7z x $env:TEMP\hashcat.7z -oC:\tools\
-Rename-Item -Path "C:\tools\hashcat-5.1.0\" -NewName hashcat
 
 Invoke-WebRequest -Uri 'https://www.heidisql.com/downloads/releases/HeidiSQL_10.3_64_Portable.zip' -OutFile "$env:TEMP\HeidiSQL.zip"
 Expand-Archive -Path "$env:TEMP\HeidiSQL.zip" -DestinationPath "C:\tools\HeidiSQL"
