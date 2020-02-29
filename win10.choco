@@ -21,8 +21,8 @@ choco feature enable -n allowGlobalConfirmation
 choco install git
 choco install vscode
 #choco install dotnetcore-sdk --version=2.2.402
-#choco install openjdk11
-choco install openjdk8
+choco install openjdk11
+#choco install openjdk8
 choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
 choco install googlechrome --ignore-checksums
 choco install 7zip
@@ -101,6 +101,11 @@ Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Com
 Invoke-WebRequest -Uri 'https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe' -OutFile "$env:TEMP\BuildTools.exe"
 Start-Process -FilePath "$env:TEMP\BuildTools.exe" -ArgumentList "/Passive" -Wait
 Enable-WindowsOptionalFeature -FeatureName NetFx3 -Online
+
+# Networking
+netsh interface ip set address "Ethernet1" static 192.168.152.101 255.255.255.0 192.168.152.100
+route add 10.8.0.0 mask 255.255.255.0 192.168.152.100
+route add 10.20.124.0 mask 255.255.255.0 192.168.152.100
 
 # UI
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
