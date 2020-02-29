@@ -10,45 +10,46 @@ New-Item -Path C:\ -Name payloads -ItemType Directory -ErrorAction SilentlyConti
 # Defender
 Add-MpPreference -ExclusionPath "C:\tools\"
 Add-MpPreference -ExclusionPath "C:\payloads\"
-Add-MpPreference -ExclusionPath "C:\ProgramData\chocolatey\lib\wsl-kalilinux\"
+#Add-MpPreference -ExclusionPath "C:\ProgramData\chocolatey\lib\wsl-kalilinux\"
 Set-MpPreference -MAPSReporting Disabled
 Set-MpPreference -SubmitSamplesConsent NeverSend
 
 # Packages
 choco feature enable -n allowGlobalConfirmation
-choco install wsl
-choco install wsl-kalilinux
+#choco install wsl
+#choco install wsl-kalilinux
 choco install git
 choco install vscode
-choco install dotnetcore-sdk --version=2.2.402
-choco install openjdk11
+#choco install dotnetcore-sdk --version=2.2.402
+#choco install openjdk11
+choco install openjdk8
 choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
 choco install googlechrome --ignore-checksums
 choco install 7zip
-choco install openvpn
+#choco install openvpn
 
 # OpenVPN
-New-Item -Path "$env:PUBLIC\Desktop" -Name OpenVPN -ItemType Directory -ErrorAction SilentlyContinue
-Invoke-WebRequest -Uri "https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/openvpn.bat" -OutFile "C:\ProgramData\chocolatey\bin\openvpn.bat"
+#New-Item -Path "$env:PUBLIC\Desktop" -Name OpenVPN -ItemType Directory -ErrorAction SilentlyContinue
+#Invoke-WebRequest -Uri "https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/openvpn.bat" -OutFile "C:\ProgramData\chocolatey\bin\openvpn.bat"
 
 # Kali
-kali run "apt -y update"
-kali run "apt -y full-upgrade"
-kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux cupp cewl vim hashcat"
-kali run "pip install impacket"
-kali run "git clone https://github.com/rbsec/dnscan.git /opt/dnscan"
-kali run "git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; pip install -r requirements.txt"
-kali run "git clone https://gist.github.com/superkojiman/11076951 /opt/namemash; chmod +x /opt/namemash/namemash.py"
-kali run "git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; pip3 install -r requirements.txt"
+#kali run "apt -y update"
+#kali run "apt -y full-upgrade"
+#kali run "apt -y install git python-pip python3 python3-pip metasploit-framework proxychains socat tmux cupp cewl vim hashcat"
+#kali run "pip install impacket"
+#kali run "git clone https://github.com/rbsec/dnscan.git /opt/dnscan"
+#kali run "git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; pip install -r requirements.txt"
+#kali run "git clone https://gist.github.com/superkojiman/11076951 /opt/namemash; chmod +x /opt/namemash/namemash.py"
+#kali run "git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; pip3 install -r requirements.txt"
 
 # GitHub
 git clone https://github.com/ZeroPointSecurity/PhishingTemplates.git C:\tools\PhishingTemplates
 git clone https://github.com/dafthack/MailSniper.git C:\tools\MailSniper
-git clone --recurse-submodules https://github.com/cobbr/Covenant C:\tools\Covenant
+#git clone --recurse-submodules https://github.com/cobbr/Covenant C:\tools\Covenant
 git clone --branch dev https://github.com/PowerShellMafia/PowerSploit.git C:\tools\PowerSploit
 git clone https://github.com/tevora-threat/SharpView.git C:\tools\SharpView
-git clone https://github.com/GhostPack/Seatbelt.git C:\tools\Seatbelt
-git clone https://github.com/GhostPack/SharpUp.git C:\tools\SharpUp
+#git clone https://github.com/GhostPack/Seatbelt.git C:\tools\Seatbelt
+#git clone https://github.com/GhostPack/SharpUp.git C:\tools\SharpUp
 git clone https://github.com/rasta-mouse/Sherlock.git C:\tools\Sherlock
 git clone https://github.com/rasta-mouse/Watson.git C:\tools\Watson
 git clone https://github.com/hfiref0x/UACME.git C:\tools\UACME
@@ -65,20 +66,22 @@ git clone https://github.com/PowerShell/GPRegistryPolicy.git C:\tools\GPRegistry
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
 
+# dnSpy
+Invoke-WebRequest -Uri 'https://github.com/0xd4d/dnSpy/releases/download/v6.1.3/dnSpy-net472.zip' -OutFile "$env:TEMP\dnSpy.zip"
+Expand-Archive -Path "$env:TEMP\dnSpy.zip" -DestinationPath C:\tools\dnSpy
+
+# Heidi
+Invoke-WebRequest -Uri 'https://www.heidisql.com/downloads/releases/HeidiSQL_10.3_64_Portable.zip' -OutFile "$env:TEMP\HeidiSQL.zip"
+Expand-Archive -Path "$env:TEMP\HeidiSQL.zip" -DestinationPath "C:\tools\HeidiSQL"
+
 # IE first run
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer"
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Main"
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" -Name DisableFirstRunCustomize -Value 1
 
-Invoke-WebRequest -Uri 'https://github.com/0xd4d/dnSpy/releases/download/v6.1.3/dnSpy-net472.zip' -OutFile "$env:TEMP\dnSpy.zip"
-Expand-Archive -Path "$env:TEMP\dnSpy.zip" -DestinationPath C:\tools\dnSpy
-
-Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/build-covenant.bat' -OutFile "$env:TEMP\build-covenant.bat"
-Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/run-covenant.bat' -OutFile "C:\ProgramData\chocolatey\bin\covenant.bat"
-. "$env:TEMP\build-covenant.bat"
-
-Invoke-WebRequest -Uri 'https://www.heidisql.com/downloads/releases/HeidiSQL_10.3_64_Portable.zip' -OutFile "$env:TEMP\HeidiSQL.zip"
-Expand-Archive -Path "$env:TEMP\HeidiSQL.zip" -DestinationPath "C:\tools\HeidiSQL"
+#Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/build-covenant.bat' -OutFile "$env:TEMP\build-covenant.bat"
+#Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/run-covenant.bat' -OutFile "C:\ProgramData\chocolatey\bin\covenant.bat"
+#. "$env:TEMP\build-covenant.bat"
 
 # BloodHound
 Invoke-WebRequest -Uri 'https://github.com/BloodHoundAD/BloodHound/releases/download/3.0.2/BloodHound-win32-x64.zip' -OutFile "$env:TEMP\BloodHound.zip"
@@ -104,9 +107,9 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
 Set-WindowsExplorerOptions -EnableShowFileExtensions -EnableShowFullPathInTitleBar -EnableExpandToOpenFolder -EnableShowRibbon
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\tools.lnk" -targetPath C:\tools\
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\IEUser\Desktop\Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
-Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\kali.lnk" -targetPath "C:\ProgramData\chocolatey\bin\kali.exe" -runAsAdmin
-Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\Covenant.lnk" -targetPath "C:\ProgramData\chocolatey\bin\covenant.bat" -runAsAdmin
-Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\OpenVPN.lnk" -targetPath "C:\ProgramData\chocolatey\bin\openvpn.bat" -runAsAdmin
+#Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\kali.lnk" -targetPath "C:\ProgramData\chocolatey\bin\kali.exe" -runAsAdmin
+#Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\Covenant.lnk" -targetPath "C:\ProgramData\chocolatey\bin\covenant.bat" -runAsAdmin
+#Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\OpenVPN.lnk" -targetPath "C:\ProgramData\chocolatey\bin\openvpn.bat" -runAsAdmin
 
 New-Item -Path C:\ -Name BGInfo -ItemType Directory -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/wallpaper.jpg' -OutFile "C:\BGInfo\wallpaper.jpg"
@@ -117,5 +120,5 @@ New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ -Nam
 Remove-Item -Path "C:\Users\Public\Desktop\Boxstarter Shell.lnk"
 Remove-Item -Path "C:\Users\IEUser\Desktop\eula.lnk"
 Remove-Item -Path "C:\Users\Public\Desktop\Visual Studio Code.lnk"
-Remove-Item -Path "C:\Users\Public\Desktop\OpenVPN GUI.lnk"
+#Remove-Item -Path "C:\Users\Public\Desktop\OpenVPN GUI.lnk"
 Remove-Item -Path C:\Temp\ -Recurse -Force
