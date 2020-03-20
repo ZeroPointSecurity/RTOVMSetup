@@ -27,6 +27,7 @@ sudo git clone https://github.com/rbsec/dnscan.git /opt/dnscan
 sudo git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; sudo pip install -r requirements.txt
 sudo git clone https://gist.github.com/superkojiman/11076951 /opt/namemash; sudo chmod +x /opt/namemash/namemash.py
 sudo git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; sudo pip3 install -r requirements.txt
+sudo git clone https://github.com/FortyNorthSecurity/Egress-Assess.git /opt/Egress-Assess
 sudo gem install evil-winrm
 
 sudo systemctl enable ssh.service
