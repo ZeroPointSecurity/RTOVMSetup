@@ -1,4 +1,5 @@
 # RTOVMSetup
+## Windows
 
 ### 1. Install Boxstarter
 ```
@@ -9,4 +10,9 @@
 ```
 $Cred = Get-Credential $env:USERNAME
 Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/ZeroPointSecurity/RTOVMSetup/master/setup -Credential $Cred
+```
+
+## Kali
+```
+kali@kali:~$ curl -sS https://raw.githubusercontent.com/ZeroPointSecurity/RTOVMSetup/master/kali.sh | sudo bash -
 ```
