@@ -24,6 +24,7 @@ choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
 choco install googlechrome --ignore-checksums
 choco install 7zip
 choco install heidisql --version=10.2.0.559900
+choco install putty
 
 # GitHub
 git clone https://github.com/ZeroPointSecurity/PhishingTemplates.git C:\tools\PhishingTemplates
@@ -43,7 +44,6 @@ git clone https://github.com/NetSPI/PowerUpSQL.git C:\tools\PowerUpSQL
 git clone https://github.com/decoder-it/juicy-potato.git C:\tools\juicy-potato
 git clone https://github.com/HarmJ0y/DAMP.git C:\tools\DAMP
 git clone https://github.com/gentilkiwi/mimikatz.git C:\tools\mimikatz
-git clone https://github.com/PowerShell/GPRegistryPolicy.git C:\tools\GPRegistryPolicy
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
 
@@ -74,6 +74,9 @@ Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Com
 Invoke-WebRequest -Uri 'https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe' -OutFile "$env:TEMP\BuildTools.exe"
 Start-Process -FilePath "$env:TEMP\BuildTools.exe" -ArgumentList "/Passive" -Wait
 Enable-WindowsOptionalFeature -FeatureName NetFx3 -Online
+
+# GPRegistryPolicy
+Install-Module GPRegistryPolicy -Force
 
 # Networking
 ## VMware
