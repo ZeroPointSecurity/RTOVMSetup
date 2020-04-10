@@ -3,7 +3,7 @@ sudo apt -y update
 sudo apt -y install iptables-persistent netfilter-persistent python-pip python3-pip
 
 sudo systemctl disable network-manager.service
-echo -en "\nauto eth0\niface eth0 inet dhcp\n\nauto eth1\niface eth1 inet static\n\taddress 192.168.152.100\n\tnetmask 255.255.255.0" | sudo tee -a /etc/network/interfaces
+echo -en "\nauto eth0\niface eth0 inet static\n\taddress 192.168.152.100\n\tnetmask 255.255.255.0\n\nauto eth1\niface eth1 inet dhcp" | sudo tee -a /etc/network/interfaces
 sudo service networking restart
 
 sudo sysctl -w net.ipv4.ip_forward=1
