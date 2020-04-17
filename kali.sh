@@ -1,9 +1,9 @@
 #!/bin/bash
 sudo apt -y update
-sudo apt -y install iptables-persistent netfilter-persistent python-pip python3-pip
+sudo apt -y install iptables-persistent netfilter-persistent python3-pip
 
 sudo systemctl disable network-manager.service
-echo -en "\nauto eth0\niface eth0 inet static\n\taddress 192.168.152.100\n\tnetmask 255.255.255.0\n\nauto eth1\niface eth1 inet dhcp" | sudo tee -a /etc/network/interfaces
+echo -en "\n\nauto eth0\niface eth0 inet dhcp\nauto eth1\niface eth1 inet static\n\taddress 192.168.152.100\n\tnetmask 255.255.255.0" | sudo tee -a /etc/network/interfaces
 sudo service networking restart
 
 sudo sysctl -w net.ipv4.ip_forward=1
@@ -24,7 +24,7 @@ rm packages-microsoft-prod.deb
 
 sudo git clone --recurse-submodules https://github.com/cobbr/Covenant /opt/Covenant
 sudo git clone https://github.com/rbsec/dnscan.git /opt/dnscan
-sudo git clone https://github.com/BishopFox/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; sudo pip install -r requirements.txt
+sudo git clone https://github.com/chinarulezzz/spoofcheck /opt/spoofcheck; cd /opt/spoofcheck; sudo pip3 install -r requirements.txt
 sudo git clone https://gist.github.com/superkojiman/11076951 /opt/namemash; sudo chmod +x /opt/namemash/namemash.py
 sudo git clone https://github.com/byt3bl33d3r/SprayingToolkit.git /opt/SprayingToolkit; cd /opt/SprayingToolkit; sudo pip3 install -r requirements.txt
 sudo git clone https://github.com/FortyNorthSecurity/Egress-Assess.git /opt/Egress-Assess
