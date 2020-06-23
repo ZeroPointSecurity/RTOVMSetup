@@ -19,7 +19,7 @@ sudo dpkg -i packages-microsoft-prod.deb
 sudo apt -y update
 sudo apt -y install apt-transport-https
 sudo apt -y update
-sudo apt -y install dotnet-sdk-2.2
+sudo apt -y install dotnet-sdk-3.1
 rm packages-microsoft-prod.deb
 
 sudo git clone --recurse-submodules https://github.com/cobbr/Covenant /opt/Covenant
