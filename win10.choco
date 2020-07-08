@@ -46,10 +46,7 @@ git clone https://github.com/HarmJ0y/DAMP.git C:\tools\DAMP
 git clone https://github.com/gentilkiwi/mimikatz.git C:\tools\mimikatz
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
-
-# dnSpy
-Invoke-WebRequest -Uri 'https://github.com/0xd4d/dnSpy/releases/latest/download/dnSpy-net472.zip' -OutFile "$env:TEMP\dnSpy.zip"
-Expand-Archive -Path "$env:TEMP\dnSpy.zip" -DestinationPath C:\tools\dnSpy
+git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
 
 # IE first run
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer"
