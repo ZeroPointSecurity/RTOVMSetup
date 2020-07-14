@@ -91,7 +91,7 @@ Add-Content C:\Windows\System32\drivers\etc\hosts "192.168.152.100 kali"
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
 Set-WindowsExplorerOptions -EnableShowFileExtensions -EnableShowFullPathInTitleBar -EnableExpandToOpenFolder -EnableShowRibbon
 Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\tools.lnk" -targetPath C:\tools\
-Install-ChocolateyShortcut -shortcutFilePath "C:\Users\IEUser\Desktop\Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
+Install-ChocolateyShortcut -shortcutFilePath "C:\Users\Public\Desktop\Neo4j.lnk" -targetPath "C:\tools\Neo4j\bin\neo4j.bat" -arguments "console" -runAsAdmin
 
 New-Item -Path C:\ -Name BGInfo -ItemType Directory -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri 'https://github.com/ZeroPointSecurity/RTOVMSetup/raw/master/wallpaper.jpg' -OutFile "C:\BGInfo\wallpaper.jpg"
