@@ -47,6 +47,7 @@ git clone https://github.com/gentilkiwi/mimikatz.git C:\tools\mimikatz
 git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
 git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
+git clone https://github.com/leechristensen/SpoolSample.git C:\tools\SpoolSample
 
 # IE first run
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer"
