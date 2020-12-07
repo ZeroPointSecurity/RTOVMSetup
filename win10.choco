@@ -30,7 +30,7 @@ choco install putty
 git clone https://github.com/ZeroPointSecurity/PhishingTemplates.git C:\tools\PhishingTemplates
 git clone https://github.com/dafthack/MailSniper.git C:\tools\MailSniper
 git clone https://github.com/GhostPack/Seatbelt.git C:\tools\Seatbelt
-git clone --branch dev https://github.com/PowerShellMafia/PowerSploit.git C:\tools\PowerSploit
+git clone https://github.com/PowerShellMafia/PowerSploit.git C:\tools\PowerSploit
 git clone https://github.com/tevora-threat/SharpView.git C:\tools\SharpView
 git clone https://github.com/rasta-mouse/Sherlock.git C:\tools\Sherlock
 git clone https://github.com/rasta-mouse/Watson.git C:\tools\Watson
