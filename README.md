@@ -9,7 +9,7 @@
 ### 2. Install Boxstarter Package
 ```
 $Cred = Get-Credential $env:USERNAME
-Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/ZeroPointSecurity/RTOVMSetup/master/setup -Credential $Cred
+Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/ZeroPointSecurity/RTOVMSetup/master/setup/win10.choco -Credential $Cred
 ```
 
 ## Kali
