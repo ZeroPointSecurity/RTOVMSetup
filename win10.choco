@@ -8,46 +8,46 @@ Remove-Item C:\BGinfo\ -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -Path C:\ -Name payloads -ItemType Directory -ErrorAction SilentlyContinue
 
 # Defender
-Add-MpPreference -ExclusionPath "C:\tools\"
-Add-MpPreference -ExclusionPath "C:\payloads\"
-$Downloads = Get-ItemPropertyValue 'HKCU:\software\microsoft\windows\currentversion\explorer\shell folders\' -Name '{374DE290-123F-4565-9164-39C4925E467B}'
 Add-MpPreference -ExclusionPath $Downloads
+Add-MpPreference -ExclusionPath "C:\payloads\"
+Add-MpPreference -ExclusionPath "C:\tools\"
+$Downloads = Get-ItemPropertyValue 'HKCU:\software\microsoft\windows\currentversion\explorer\shell folders\' -Name '{374DE290-123F-4565-9164-39C4925E467B}'
 Set-MpPreference -MAPSReporting Disabled
 Set-MpPreference -SubmitSamplesConsent NeverSend
 
 # Packages
 choco feature enable -n allowGlobalConfirmation
-choco install git
-choco install vscode
-choco install openjdk11
-choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
-choco install googlechrome --ignore-checksums
 choco install 7zip
+choco install git
+choco install googlechrome --ignore-checksums
 choco install heidisql --version=10.2.0.559900
+choco install openjdk11
 choco install putty
+choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
+choco install vscode
 
 # GitHub
-git clone https://github.com/ZeroPointSecurity/PhishingTemplates.git C:\tools\PhishingTemplates
+git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
+git clone https://github.com/BloodHoundAD/SharpHound3.git C:\tools\SharpHound3
 git clone https://github.com/dafthack/MailSniper.git C:\tools\MailSniper
+git clone https://github.com/decoder-it/juicy-potato.git C:\tools\juicy-potato
+git clone https://github.com/djhohnstein/SharpChrome.git C:\tools\SharpChrome
+git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
+git clone https://github.com/FSecureLABS/SharpGPOAbuse.git C:\tools\SharpGPOAbuse
+git clone https://github.com/gentilkiwi/mimikatz.git C:\tools\mimikatz
 git clone https://github.com/GhostPack/Seatbelt.git C:\tools\Seatbelt
+git clone https://github.com/HarmJ0y/DAMP.git C:\tools\DAMP
+git clone https://github.com/hfiref0x/UACME.git C:\tools\UACME
+git clone https://github.com/leechristensen/SpoolSample.git C:\tools\SpoolSample
+git clone https://github.com/NetSPI/PowerUpSQL.git C:\tools\PowerUpSQL
+git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
 git clone https://github.com/PowerShellMafia/PowerSploit.git C:\tools\PowerSploit
-git clone https://github.com/tevora-threat/SharpView.git C:\tools\SharpView
+git clone https://github.com/rasta-mouse/MiscTools.git C:\tools\MiscTools
 git clone https://github.com/rasta-mouse/Sherlock.git C:\tools\Sherlock
 git clone https://github.com/rasta-mouse/Watson.git C:\tools\Watson
-git clone https://github.com/hfiref0x/UACME.git C:\tools\UACME
-git clone https://github.com/BloodHoundAD/SharpHound3.git C:\tools\SharpHound3
+git clone https://github.com/tevora-threat/SharpView.git C:\tools\SharpView
 git clone https://github.com/TheWover/donut.git C:\tools\donut
-git clone https://github.com/rasta-mouse/MiscTools.git C:\tools\MiscTools
-git clone https://github.com/djhohnstein/SharpChrome.git C:\tools\SharpChrome
-git clone https://github.com/FSecureLABS/SharpGPOAbuse.git C:\tools\SharpGPOAbuse
-git clone https://github.com/NetSPI/PowerUpSQL.git C:\tools\PowerUpSQL
-git clone https://github.com/decoder-it/juicy-potato.git C:\tools\juicy-potato
-git clone https://github.com/HarmJ0y/DAMP.git C:\tools\DAMP
-git clone https://github.com/gentilkiwi/mimikatz.git C:\tools\mimikatz
-git clone https://github.com/p3nt4/PowerShdll.git C:\tools\PowerShdll
-git clone https://github.com/FortyNorthSecurity/Egress-Assess.git C:\tools\Egress-Assess
-git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
-git clone https://github.com/leechristensen/SpoolSample.git C:\tools\SpoolSample
+git clone https://github.com/ZeroPointSecurity/PhishingTemplates.git C:\tools\PhishingTemplates
 
 # IE first run
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer"
