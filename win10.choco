@@ -24,8 +24,7 @@ choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
 ##choco install vscode
 
 # GitHub
-## git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
-Invoke-WebRequest -Uri https://github.com/dnSpy/dnSpy/releases/latest/download/dnSpy-netframework.zip -OutFile $env:TEMP
+Invoke-WebRequest -Uri https://github.com/dnSpy/dnSpy/releases/latest/download/dnSpy-netframework.zip -OutFile "$env:TEMP\dnSpy-netframework.zip"
 Expand-Archive -Path "$env:TEMP\dnSpy-netframework.zip" -DestinationPath C:\tools\
 
 git clone https://github.com/BloodHoundAD/SharpHound3.git C:\tools\SharpHound3
