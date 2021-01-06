@@ -1,11 +1,8 @@
 New-Item -Path C:\ -Name Temp -ItemType Directory -ErrorAction SilentlyContinue
+New-Item -Path C:\ -Name payloads -ItemType Directory -ErrorAction SilentlyContinue
+
 $env:TEMP = "C:\Temp"
 $env:TMP = "C:\Temp"
-
-Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run -Name bginfo -ErrorAction SilentlyContinue
-Remove-Item C:\BGinfo\ -Recurse -Force -ErrorAction SilentlyContinue
-
-New-Item -Path C:\ -Name payloads -ItemType Directory -ErrorAction SilentlyContinue
 
 # Defender
 $Downloads = Get-ItemPropertyValue 'HKCU:\software\microsoft\windows\currentversion\explorer\shell folders\' -Name '{374DE290-123F-4565-9164-39C4925E467B}'
@@ -19,15 +16,17 @@ Set-MpPreference -SubmitSamplesConsent NeverSend
 choco feature enable -n allowGlobalConfirmation
 choco install 7zip
 choco install git
-choco install googlechrome --ignore-checksums
+## choco install googlechrome --ignore-checksums
 choco install heidisql --version=10.2.0.559900
 choco install openjdk11
 choco install putty
 choco install sysinternals --params "/InstallDir:C:\tools\sysinternals"
-choco install vscode
+##choco install vscode
 
 # GitHub
-git clone --recursive https://github.com/0xd4d/dnSpy.git C:\tools\dnSpy
+Invoke-WebRequest -Uri https://github.com/dnSpy/dnSpy/releases/latest/download/dnSpy-netframework.zip -OutFile "$env:TEMP\dnSpy-netframework.zip"
+Expand-Archive -Path "$env:TEMP\dnSpy-netframework.zip" -DestinationPath C:\tools\dnSpy
+
 git clone https://github.com/BloodHoundAD/SharpHound3.git C:\tools\SharpHound3
 git clone https://github.com/dafthack/MailSniper.git C:\tools\MailSniper
 git clone https://github.com/decoder-it/juicy-potato.git C:\tools\juicy-potato
@@ -63,14 +62,8 @@ Expand-Archive -Path "$env:TEMP\neo4j.zip" -DestinationPath C:\tools\
 Rename-Item -Path C:\tools\neo4j-community-4.0.0\ -NewName Neo4j
 
 ## Visual Studio
-$html = (New-Object Net.WebClient).DownloadString('https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16')
-$url = [regex]::Match($html, '(https).*(vs_Community.exe)').Captures.Groups[0].Value
-Invoke-WebRequest -Uri $url -OutFile "$Downloads\vs_Community.exe"
-#Start-Process -FilePath "$env:TEMP\vs_Community.exe" -ArgumentList "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --Passive" -Wait
 Invoke-WebRequest -Uri 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioClient/vsextensions/MicrosoftVisualStudio2017InstallerProjects/0.9.6/vspackage' -OutFile "$Downloads\InstallerProjects.vsix"
-#Start-Process -FilePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/q $env:TEMP\InstallerProjects.vsix" -Wait
 Invoke-WebRequest -Uri 'https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe' -OutFile "$Downloads\BuildTools.exe"
-#Start-Process -FilePath "$env:TEMP\BuildTools.exe" -ArgumentList "/Passive" -Wait
 Enable-WindowsOptionalFeature -FeatureName NetFx3 -Online
 
 # GPRegistryPolicy
@@ -102,7 +95,4 @@ New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\ -Nam
 # Misc
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 Remove-Item -Path "C:\Users\Public\Desktop\Boxstarter Shell.lnk"
-Remove-Item -Path "$DesktopPath\eula.lnk"
-Remove-Item -Path "C:\Users\Public\Desktop\Visual Studio Code.lnk"
-Remove-Item -Path "$DesktopPath\HeidiSQL.lnk"
 Remove-Item -Path C:\Temp\ -Recurse -Force

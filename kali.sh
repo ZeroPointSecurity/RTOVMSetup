@@ -30,4 +30,6 @@ sudo gem install evil-winrm
 
 sudo systemctl enable ssh.service
 
+echo -en "\nRed Team Ops || Zero-Point Security\nhttps://www.zeropointsecurity.co.uk/red-team-ops\n\n" | sudo tee /etc/motd
+
 sudo reboot
